@@ -225,15 +225,6 @@ export default function FitnessTrainerWebsite() {
         </div>
       </nav>
 
-      <div className="px-6 py-3 bg-green-500 text-black font-semibold text-center flex flex-col gap-2">
-        {firebaseConnected && <div>🔥 Firebase Connected Successfully</div>}
-        {razorpayReady && <div>💳 Razorpay Payment Gateway Ready</div>}
-        {formspreeConnected && <div>📩 Formspree Booking Emails Active</div>}
-        {notifications.map((note) => (
-          <div key={note}>{note}</div>
-        ))}
-      </div>
-
       <section className="relative overflow-hidden bg-gradient-to-br from-black via-gray-900 to-green-900 px-6 py-28 text-center">
         <div className="max-w-5xl mx-auto">
           <div className="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/20 rounded-full px-5 py-2 mb-6">
