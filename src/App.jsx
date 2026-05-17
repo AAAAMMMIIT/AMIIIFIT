@@ -38,16 +38,16 @@ const diets = [
 ];
 
 const dashboardStats = [
-  ['128', 'New Leads'],
-  ['42', 'Active Clients'],
+  ['18', 'New Leads'],
+  ['14', 'Active Clients'],
   ['₹58K', 'Monthly Revenue'],
 ];
 
 const analyticsStats = [
-  ['1000+', 'Happy Clients'],
+  ['100+', 'Happy Clients'],
   ['95%', 'Success Rate'],
   ['24/7', 'AI Support'],
-  ['500+', 'Diet Plans Sold'],
+  ['164+', 'Diet Plans Sold'],
 ];
 
 export default function FitnessTrainerWebsite() {
@@ -337,12 +337,14 @@ export default function FitnessTrainerWebsite() {
                   {course.price}
                 </div>
 
-                <button
-                  className="bg-green-500 hover:bg-green-400 text-black px-6 py-3 rounded-2xl font-bold w-full transition-colors"
-                  type="button"
-                >
-                  Buy Now
-                </button>
+              <a
+              href="https://wa.me/919315783260"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-green-500 hover:bg-green-400 text-black px-6 py-3 rounded-2xl font-bold w-full transition-colors block text-center"
+              >
+               Buy Now
+              </a>
               </div>
             ))}
           </div>
