@@ -103,24 +103,74 @@ export default function FitnessTrainerWebsite() {
     [darkMode]
   );
 
-  const sendChatMessage = () => {
-    const trimmedMessage = messageInput.trim();
+  const sendChatMessage = async () => {
+  const trimmedMessage = messageInput.trim();
 
-    if (!trimmedMessage) {
-      return;
-    }
+  if (!trimmedMessage) {
+    return;
+  }
 
-    setChatMessages((previousMessages) => [
-      ...previousMessages,
-      { sender: 'You', text: trimmedMessage },
+  const userMessage = {
+    sender: 'You',
+    text: trimmedMessage,
+  };
+
+  setChatMessages((previous) => [
+    ...previous,
+    userMessage,
+  ]);
+
+  setMessageInput('');
+
+  try {
+    const response = await fetch(
+      'https://api.openai.com/v1/chat/completions',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: 'gpt-3.5-turbo',
+          messages: [
+            {
+              role: 'system',
+              content:
+                'You are a professional fitness trainer and nutrition coach.',
+            },
+            {
+              role: 'user',
+              content: trimmedMessage,
+            },
+          ],
+        }),
+      }
+    );
+
+    const data = await response.json();
+
+    const aiReply =
+      data.choices?.[0]?.message?.content ||
+      'Sorry, I could not respond right now.';
+
+    setChatMessages((previous) => [
+      ...previous,
       {
         sender: 'AI Coach',
-        text: 'Stay consistent with workouts, hydration, and protein intake.',
+        text: aiReply,
       },
     ]);
-
-    setMessageInput('');
-  };
+  } catch (error) {
+    setChatMessages((previous) => [
+      ...previous,
+      {
+        sender: 'AI Coach',
+        text: 'AI server error. Please try again.',
+      },
+    ]);
+  }
+};
 
   const fakeLogin = () => {
     setUser({
