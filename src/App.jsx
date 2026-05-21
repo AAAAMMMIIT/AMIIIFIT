@@ -104,40 +104,34 @@ export default function FitnessTrainerWebsite() {
   );
 
   const sendChatMessage = async () => {
-  const trimmedMessage = messageInput.trim();
+    const trimmedMessage = messageInput.trim();
 
-  if (!trimmedMessage) {
-    return;
-  }
+    if (!trimmedMessage) {
+      return;
+    }
 
-  const userMessage = {
-    sender: 'You',
-    text: trimmedMessage,
-  };
-
-  setChatMessages((previous) => [
-    ...previous,
-    userMessage,
-  ]);
-
-  setMessageInput('');
-
-  try {
-    const response = await fetch(
-      'https://api.openai.com/v1/chat/completions',
+    setChatMessages((previous) => [
+      ...previous,
       {
+        sender: 'You',
+        text: trimmedMessage,
+      },
+    ]);
+
+    setMessageInput('');
+
+    try {
+      const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
         },
         body: JSON.stringify({
-          model: 'gpt-3.5-turbo',
           messages: [
             {
               role: 'system',
               content:
-                'You are a professional fitness trainer and nutrition coach.',
+                'You are a professional fitness trainer and nutrition expert.',
             },
             {
               role: 'user',
@@ -145,32 +139,31 @@ export default function FitnessTrainerWebsite() {
             },
           ],
         }),
-      }
-    );
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    const aiReply =
-      data.choices?.[0]?.message?.content ||
-      'Sorry, I could not respond right now.';
+      const aiReply =
+        data.choices?.[0]?.message?.content ||
+        'AI is temporarily unavailable.';
 
-    setChatMessages((previous) => [
-      ...previous,
-      {
-        sender: 'AI Coach',
-        text: aiReply,
-      },
-    ]);
-  } catch (error) {
-    setChatMessages((previous) => [
-      ...previous,
-      {
-        sender: 'AI Coach',
-        text: 'AI server error. Please try again.',
-      },
-    ]);
-  }
-};
+      setChatMessages((previous) => [
+        ...previous,
+        {
+          sender: 'AI Coach',
+          text: aiReply,
+        },
+      ]);
+    } catch (error) {
+      setChatMessages((previous) => [
+        ...previous,
+        {
+          sender: 'AI Coach',
+          text: 'Server error. Please try again.',
+        },
+      ]);
+    }
+  };
 
   const fakeLogin = () => {
     setUser({
