@@ -17,16 +17,12 @@ export default async function handler(req, res) {
         body: JSON.stringify({
           model: 'gpt-3.5-turbo',
           messages: req.body.messages,
-          temperature: 0.7,
+          max_tokens: 200,
         }),
       }
     );
 
     const data = await response.json();
-
-    if (!response.ok) {
-      return res.status(500).json(data);
-    }
 
     return res.status(200).json(data);
   } catch (error) {
