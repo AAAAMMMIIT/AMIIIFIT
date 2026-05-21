@@ -131,7 +131,7 @@ export default function FitnessTrainerWebsite() {
             {
               role: 'system',
               content:
-                'You are a professional fitness trainer and nutrition expert.',
+                'You are a professional AI fitness coach helping users with workouts, fat loss, muscle gain, indian diet plans, supplements, cardio, bodybuilding, and motivation. Reply clearly and logically.'
             },
             {
               role: 'user',
